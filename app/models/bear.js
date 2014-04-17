@@ -1,7 +1,7 @@
-var mongoos = require('mongoose');
+var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var BearSchema = new Schme({
+var BearSchema = new Schema({
 	name: String
 });
 
