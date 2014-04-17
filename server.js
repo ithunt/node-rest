@@ -34,6 +34,7 @@ router.get('/', function(req, res) {
 //more routes here
 
 router.route('/boats')
+	//create new boat
 	.post(function(req, res) {
 		var boat = new Boat();
 		boat.name = req.body.name;
@@ -44,7 +45,29 @@ router.route('/boats')
 
 			res.json({ message: 'Boat floated!' });
 		});
+	})
+	//get all boats
+	.get(function(req, res) {
+		Boat.find(function(err, boats) {
+			if(err)
+				res.send(err);
+
+			res.json(boats);
+		});
 	});
+
+//get boat by id
+router.route('/boats/:boat_id')
+
+	.get(function(req, res) {
+		Boat.findById(req.params.boat_id, function(err, boat){
+			if(err)
+				res.send(err);
+			res.json(boat);
+		});
+	});
+
+
 
 //register routes - prefix with /api
 app.use('/api', router);
