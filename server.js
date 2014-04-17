@@ -5,7 +5,7 @@ var express 	= require('express');
 var app		= express(); //define our app using express
 var bodyParser 	= require('body-parser');
 
-var Bear = require('./app/models/bear'); // pull in our own module
+var Boat = require('./app/models/boat'); // pull in our own module
 
 var mongoose   = require('mongoose');
 mongoose.connect('mongodb://localhost/node-rest'); // connect to our database
@@ -32,6 +32,19 @@ router.get('/', function(req, res) {
 });
 
 //more routes here
+
+router.route('/boats')
+	.post(function(req, res) {
+		var boat = new Boat();
+		boat.name = req.body.name;
+
+		boat.save(function(err) {
+			if(err)
+				res.send(err);
+
+			res.json({ message: 'Boat floated!' });
+		});
+	});
 
 //register routes - prefix with /api
 app.use('/api', router);
