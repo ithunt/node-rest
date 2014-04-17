@@ -65,6 +65,31 @@ router.route('/boats/:boat_id')
 				res.send(err);
 			res.json(boat);
 		});
+	})
+	.put(function(req, res) {
+		Boat.findById(req.params.boat_id, function(err, boat) {
+			if(err)
+				res.send(err);
+
+			boat.name = req.body.name; //update
+
+			boat.save( function(err) {
+				if(err)
+					res.send(err);
+
+				res.json({message: 'Boat updated!'});
+			});
+		});
+	})
+	.delete(function(req, res) {
+		Boat.remove({
+			_id: req.params.boat_id
+		}, function(err, boat) {
+			if(err)
+				res.send(err);
+
+			res.json({message: 'Boat sunk!'});
+		});
 	});
 
 
